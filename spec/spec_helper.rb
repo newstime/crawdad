@@ -8,16 +8,16 @@
 puts "Running on Ruby version: #{RUBY_VERSION}"
 
 require "rubygems"
-require "test/spec"                                                
-require "mocha"
-$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib') 
+#require "test/spec"
+require "mocha/api"
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require "crawdad"
 
 # laziness for test/spec on 1.8
 include Crawdad
 
 # for Prawn integration
-$LOAD_PATH.unshift File.join(File.dirname(__FILE__), 
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__),
                              %w[.. vendor prawn lib])
 require 'prawn'
 
@@ -30,4 +30,3 @@ CachedWidthDocument = (Class.new(Prawn::Document) do
     @width_cache[[text, options]] ||= super
   end
 end).new
-
