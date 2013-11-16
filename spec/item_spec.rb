@@ -8,6 +8,7 @@
 require File.join(File.expand_path(File.dirname(__FILE__)), "spec_helper")
 include Crawdad::Tokens
 
+
 describe "All items" do
 
   it "should have a width" do
@@ -34,8 +35,9 @@ describe "Glue" do
     glue_stretch(g).should == 5
     glue_shrink(g).should == 6
   end
-  
+
 end
+
 
 describe "Penalties" do
 
@@ -43,14 +45,14 @@ describe "Penalties" do
     p = penalty(5, 10, true)
     penalty_penalty(p).should == 5
     token_width(p).should == 10
-    assert penalty_flagged?(p)
+    penalty_flagged?(p).should be
   end
 
   it "should default its width to zero and flagged to false" do
     p = penalty(10)
     penalty_penalty(p).should == 10
-    token_width(p).should.be.zero
-    assert !penalty_flagged?(p)
+    token_width(p).should be 0
+    (!penalty_flagged?(p)).should be
   end
 
   it "should allow infinite penalties (positive or negative)" do
@@ -60,6 +62,5 @@ describe "Penalties" do
     prohibited = penalty(Infinity)
     penalty_penalty(prohibited).should == Infinity
   end
-  
-end
 
+end
