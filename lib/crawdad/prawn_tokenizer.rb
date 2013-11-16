@@ -62,7 +62,7 @@ module Crawdad
       # Break paragraph on whitespace.
       # TODO: how should "battle-\nfield" be tokenized?
       words = text.strip.split(/\s+/)
-      
+
       words.each_with_index do |word, i|
         w = StringScanner.new(word)
 
@@ -73,7 +73,7 @@ module Crawdad
         end
 
         stream += word_segment(w.rest, hyphenator)
-        
+
         unless i == words.length - 1
           stream += interword_tokens
         end
@@ -135,7 +135,7 @@ module Crawdad
       else # :left or :right (:center is incompatible with hyphenation)
         # Hyphens cost 10 times more in unjustified text because we can usually
         # do better to avoid them.
-        [penalty(Infinity), glue(0, 3*space, 0), penalty(500, hyphen, true), 
+        [penalty(Infinity), glue(0, 3*space, 0), penalty(500, hyphen, true),
           glue(0, -3*space, 0)]
       end
     end
@@ -191,4 +191,3 @@ module Crawdad
   end
 
 end
-
