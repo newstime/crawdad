@@ -25,6 +25,8 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "prawn", "~> 0.12.0"
   spec.add_runtime_dependency 'text-hyphen', '~> 1.4.1'
+  spec.add_runtime_dependency 'ffi', "~> 1.9.3"
+  spec.add_runtime_dependency "ffi-inliner", "~> 0.2.4"
 
   spec.add_development_dependency 'rspec', '~> 2.14.1'
   #spec.add_development_dependency "minitest", "~> 5.0.8"
