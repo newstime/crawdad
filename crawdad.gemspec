@@ -31,4 +31,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 2.14.1'
   #spec.add_development_dependency "minitest", "~> 5.0.8"
   spec.add_development_dependency 'mocha', '~> 0.14.0'
+  spec.add_development_dependency "debugger", "~> 1.6.2"
 end

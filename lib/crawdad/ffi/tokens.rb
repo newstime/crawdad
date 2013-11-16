@@ -5,7 +5,7 @@ module Crawdad
     extend FFI::Library
 
     Type = enum(:box, :glue, :penalty)
-    
+
     def token_type(token)
       token[:type]
     end
@@ -14,6 +14,14 @@ module Crawdad
       layout :type,    Type,
              :width,   :float,
              :content, :string
+
+      def content
+        self[:content]
+      end
+
+      def width
+        self[:width]
+      end
 
       def inspect
         "(box %.2f %s)" % [self[:width], self[:content].inspect]
@@ -34,9 +42,22 @@ module Crawdad
              :stretch, :float,
              :shrink,  :float
 
+      def width
+        self[:width]
+      end
+
+      def stretch
+        self[:stretch]
+      end
+
+      def shrink
+        self[:shrink]
+      end
+
       def inspect
         "(glue %.2f %.2f %.2f)" % [self[:width], self[:stretch], self[:shrink]]
       end
+
     end
 
     def glue(width, stretch, shrink)
@@ -62,7 +83,7 @@ module Crawdad
           [self[:penalty], self[:width]]
       end
     end
-    
+
     def penalty(penalty, width=0.0, flagged=false)
       Penalty.new(Crawdad::Paragraph::C.make_penalty(width, penalty, flagged))
     end

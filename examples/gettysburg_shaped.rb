@@ -11,6 +11,7 @@ require 'crawdad'
 $:.unshift 'vendor/prawn/lib'
 require 'prawn'
 
+
 Prawn::Document.generate("gettysburg_shaped.pdf") do |pdf|
   line_spacing = pdf.font.height
 
@@ -27,7 +28,7 @@ Prawn::Document.generate("gettysburg_shaped.pdf") do |pdf|
   fitting and proper that we should do this.
   END
 
-  para = Crawdad::Paragraph.new(stream, 
+  para = Crawdad::Paragraph.new(stream,
            :line_widths => (0..40).map{|x| 200 + 10*x})
 
   para.lines.each do |tokens, breakpoint|
@@ -55,7 +56,7 @@ Prawn::Document.generate("gettysburg_shaped.pdf") do |pdf|
       end
     end
     pdf.draw_text("%6.03f" % breakpoint.ratio, :at => [0, pdf.cursor])
-    
+
     pdf.move_down(line_spacing)
   end
 
