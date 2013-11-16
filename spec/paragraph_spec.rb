@@ -56,11 +56,11 @@ describe "adjustment_ratio" do
     @para = Paragraph.new(@stream)
 
     # convenience: sums over entire stream
-    @tw = @stream.inject(0){ |sum, i| sum + (token_type(i) == :penalty ? 0 : 
+    @tw = @stream.inject(0){ |sum, i| sum + (token_type(i) == :penalty ? 0 :
                                              token_width(i)) }
-    @ty = @stream.select{|x| token_type(x) == :glue }.inject(0) { |sum, i| 
+    @ty = @stream.select{|x| token_type(x) == :glue }.inject(0) { |sum, i|
       sum + glue_stretch(i) }
-    @tz = @stream.select{|x| token_type(x) == :glue }.inject(0) { |sum, i| 
+    @tz = @stream.select{|x| token_type(x) == :glue }.inject(0) { |sum, i|
       sum + glue_shrink(i) }
     @start = Breakpoint.starting_node
   end
@@ -68,7 +68,7 @@ describe "adjustment_ratio" do
   it "should be zero for a perfect fit (no adjustment needed)" do
     @para.width = @tw
     @para.optimum_breakpoints
-    @para.adjustment_ratio(@start, 6).should.be.zero
+    @para.adjustment_ratio(@start, 6).should be(0)
   end
 
   it "should be positive when stretching, proportional to available stretch" do
@@ -84,4 +84,3 @@ describe "adjustment_ratio" do
   end
 
 end
-
