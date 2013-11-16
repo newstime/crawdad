@@ -78,6 +78,10 @@ module Crawdad
              :penalty, :float,
              :flagged, :int
 
+      def flagged
+        self[:flagged]
+      end
+
       def inspect
         "(penalty %.2f %.2f#{" F" if self[:flagged] == 1})" %
           [self[:penalty], self[:width]]

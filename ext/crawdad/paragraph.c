@@ -18,7 +18,7 @@ void inspect_token(token *t) {
       printf("BOX %f \"%s\"\n", t->box.width, t->box.content);
       break;
     case GLUE:
-      printf("GLUE %f %f %f\n", t->glue.width, t->glue.stretch, 
+      printf("GLUE %f %f %f\n", t->glue.width, t->glue.stretch,
         t->glue.shrink);
       break;
     case PENALTY:
@@ -30,17 +30,17 @@ void inspect_token(token *t) {
   }
 }
 
-float calculate_demerits(token *stream[], int old_i, token *new_item, 
+float calculate_demerits(token *stream[], int old_i, token *new_item,
                          float r) {
   token *old_item = stream[old_i];
   float d;
 
-  if((new_item->penalty.type == PENALTY) && 
+  if((new_item->penalty.type == PENALTY) &&
      (new_item->penalty.penalty >= 0)) {
     d = pow(1 + 100*(pow(abs(r), 3) + new_item->penalty.penalty), 2);
   } else if((new_item->penalty.type == PENALTY) &&
           (new_item->penalty.penalty != -INFINITY)) {
-    d = pow((1 + 100*(pow(abs(r), 3))), 2) - 
+    d = pow((1 + 100*(pow(abs(r), 3))), 2) -
         pow(new_item->penalty.penalty, 2);
   } else {
     d = pow(1 + 100*(pow(abs(r), 3)), 2);
@@ -53,8 +53,8 @@ float calculate_demerits(token *stream[], int old_i, token *new_item,
   return d;
 }
 
-float adjustment_ratio(float tw, float ty, float tz, 
-                       float aw, float ay, float az, 
+float adjustment_ratio(float tw, float ty, float tz,
+                       float aw, float ay, float az,
                        float target_width, token *stream[], int b) {
   float w, y, z; /* w=width y=stretch z=shrink */
   token *item_b = stream[b];
@@ -156,14 +156,14 @@ void concat_new_active_nodes(token *stream[], float total_width, float
     bp->position = i;
     bp->line = best[fclass].bp->line + 1;
     bp->fitness_class = fclass;
-    
+
     bp->total_width = tw;
     bp->total_stretch = ty;
     bp->total_shrink = tz;
 
     bp->total_demerits = best[fclass].demerits;
     bp->ratio = best[fclass].ratio;
-    
+
     bp->previous = best[fclass].bp;
     bp->link = active;
 
@@ -176,7 +176,7 @@ void concat_new_active_nodes(token *stream[], float total_width, float
   }
 }
 
-void main_loop(token *stream[], int i, float tw, float ty, float tz, 
+void main_loop(token *stream[], int i, float tw, float ty, float tz,
     float width, float threshold) {
   breakpoint *active, *next_node, *previous_node;
   best_breakpoint best[4];
@@ -188,7 +188,8 @@ void main_loop(token *stream[], int i, float tw, float ty, float tz,
   if(active_nodes == NULL) {
     /* TODO: be nicer */
     printf("No feasible solution. Try relaxing threshold.");
-    exit(1);
+    /*exit(1);*/
+    return;
   }
 
   active = active_nodes;
@@ -207,10 +208,10 @@ void main_loop(token *stream[], int i, float tw, float ty, float tz,
 
       /* TODO: width can be replaced by a line-specific width for line j */
       ratio = adjustment_ratio(tw, ty, tz, active->total_width,
-          active->total_stretch, active->total_shrink, width, 
+          active->total_stretch, active->total_shrink, width,
           stream, i);
 
-      if((ratio < -1) || (is_penalty(stream[i]) && 
+      if((ratio < -1) || (is_penalty(stream[i]) &&
             (stream[i]->penalty.penalty == -INFINITY))) {
         /* Remove active node from the list */
         if(previous_node)
@@ -249,14 +250,14 @@ void main_loop(token *stream[], int i, float tw, float ty, float tz,
     }
 
     /* If we found any best nodes, add them to the active list. */
-    concat_new_active_nodes(stream, tw, ty, tz, best, i, active, 
+    concat_new_active_nodes(stream, tw, ty, tz, best, i, active,
         &previous_node);
 
     active = next_node;
   }
 }
 
-breakpoint *populate_active_nodes(token *stream[], float width, 
+breakpoint *populate_active_nodes(token *stream[], float width,
     float threshold) {
   breakpoint *bp, *min_node;
 
@@ -271,5 +272,3 @@ breakpoint *populate_active_nodes(token *stream[], float width,
 
   return min_node;
 }
-
-
