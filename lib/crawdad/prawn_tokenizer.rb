@@ -101,7 +101,8 @@ module Crawdad
       if @align == :center
         [box(0, ""), glue(0, 3*space, 0)]
       elsif indent_width
-        [box(w, "")]
+        #[box(w, "")] # Changed following line from this. -bt
+        [box(indent_width, "")]
       else
         []
       end
