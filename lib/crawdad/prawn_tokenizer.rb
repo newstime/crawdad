@@ -162,6 +162,7 @@ module Crawdad
       if hyphenator
         begin
           splits = hyphenator.hyphenate(word)
+
         rescue NoMethodError => e
           if e.message =~ /each_with_index/
             # known issue wth text-hyphen 1.0.0:

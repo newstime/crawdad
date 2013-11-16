@@ -14,6 +14,8 @@ require 'crawdad/ffi/tokens'
 require 'crawdad/native'
 require 'debugger'
 
+require 'text/hyphen'
+
 $:.unshift 'vendor/prawn/lib'
 require 'prawn'
 

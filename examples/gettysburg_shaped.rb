@@ -5,11 +5,17 @@
 #
 # This is free software. Please see the LICENSE and COPYING files for details.
 
+$:.unshift 'vendor/prawn/lib'
+require 'prawn'
+
 $:.unshift 'lib'
 require 'crawdad'
 
-$:.unshift 'vendor/prawn/lib'
-require 'prawn'
+require 'crawdad/ffi'
+require 'crawdad/ffi/tokens'
+require 'crawdad/native'
+#require 'debugger'
+
 
 
 Prawn::Document.generate("gettysburg_shaped.pdf") do |pdf|
@@ -28,6 +34,8 @@ Prawn::Document.generate("gettysburg_shaped.pdf") do |pdf|
   fitting and proper that we should do this.
   END
 
+  #puts (0..40).map{|x| 200 + 10*x}
+  # TODO: Figure out why shaped text isn't working.
   para = Crawdad::Paragraph.new(stream,
            :line_widths => (0..40).map{|x| 200 + 10*x})
 
